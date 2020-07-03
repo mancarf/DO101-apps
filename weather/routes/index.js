@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require("node-fetch");
+const { urlencoded } = require('express');
 require('dotenv').config();
 const OWM_API_KEY = process.env.OWM_API_KEY || 'invalid_key';
 const UNITS = process.env.UNITS || 'metric';
@@ -22,7 +23,7 @@ router.post('/get_weather', async function (req,res) {
       res.render('index', {weather: null, error: 'Error: Unknown city'});
     }
     else if (weather.cod == '401' && weather.main == undefined) {
-      res.render('index', {weather: weather, error: null, units: unit_hex});
+      res.render('index', {weather: weather, error: url, units: unit_hex});
       res.render('index', {weather: null, error: 'Error: Invalid API Key. Please see http://openweathermap.org/faq#error401 for more info.'});
     }
     else {
